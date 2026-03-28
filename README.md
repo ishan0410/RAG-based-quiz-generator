@@ -20,7 +20,6 @@ RAG-based-quiz-generator/
 ├── retriever.py         # FAISS + TF-IDF retrieval with unified manager
 ├── quiz_generator.py    # LLM-powered MCQ generation and scoring
 ├── requirements.txt     # Python dependencies
-├── .env.example         # Template for environment variables
 ├── quiz_history/        # Auto-created directory for saved sessions
 └── README.md
 ```
