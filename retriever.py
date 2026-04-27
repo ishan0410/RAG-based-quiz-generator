@@ -10,9 +10,9 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 import numpy as np
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -53,8 +53,8 @@ class FAISSRetriever(BaseRetriever):
         OpenAI embedding model name (default: text-embedding-3-small).
     """
 
-    def __init__(self, embedding_model: str = "text-embedding-3-small"):
-        self.embeddings = OpenAIEmbeddings(model=embedding_model)
+    def __init__(self, embedding_model: str = "all-MiniLM-L6-v2"):
+        self.embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
         self.vector_store: Optional[FAISS] = None
         self._doc_count = 0
 
@@ -150,7 +150,7 @@ class RetrieverManager:
     def __init__(
         self,
         default_method: str = "faiss",
-        embedding_model: str = "text-embedding-3-small",
+        embedding_model: str = "all-MiniLM-L6-v2",
     ):
         if default_method not in self.VALID_METHODS:
             raise ValueError(f"method must be one of {self.VALID_METHODS}")

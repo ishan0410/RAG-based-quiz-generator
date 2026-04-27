@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from dataclasses import dataclass, field, asdict
 from typing import List, Optional, Literal
 
-from openai import OpenAI
+from groq import Groq
 
 logger = logging.getLogger(__name__)
 
@@ -134,18 +134,18 @@ class QuizGenerator:
 
     def __init__(
         self,
-        model: str = "gpt-4o-mini",
+        model: str = "llama-3.3-70b-versatile",
         temperature: float = 0.7,
         max_retries: int = 2,
         history_dir: Optional[str] = None,
     ):
-        api_key = os.getenv("OPENAI_API_KEY")
+        api_key = os.getenv("GROQ_API_KEY")
         if not api_key:
             raise EnvironmentError(
-                "OPENAI_API_KEY not set. Add it to your .env file or export it."
+                "GROQ_API_KEY not set. Add it to your .env file or export it."
             )
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = Groq(api_key=api_key)
         self.model = model
         self.temperature = temperature
         self.max_retries = max_retries
